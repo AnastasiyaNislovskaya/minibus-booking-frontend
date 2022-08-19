@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import CheckButton from 'react-validation/build/button';
-import isEmail from "validator/es/lib/isEmail";
-import AuthService from "../services/AuthService";
+import React, {Component} from "react";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
 export default class Register extends Component {
     constructor(props) {

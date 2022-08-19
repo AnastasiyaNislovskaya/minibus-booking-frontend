@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import AuthService from "../services/AuthService";
-import {Redirect} from "react-router-dom";
-import AdminService from "../services/AdminService";
+import {Navigate} from "react-router-dom";
 
 export default class Profile extends Component {
     constructor(props) {
@@ -23,7 +22,7 @@ export default class Profile extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to={this.state.redirect}/>
+            return <Navigate to={this.state.redirect}/>
         }
 
         const {currentUser} = this.state;

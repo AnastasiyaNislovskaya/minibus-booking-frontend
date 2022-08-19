@@ -1,14 +1,8 @@
-import axios from 'axios';
-
-const API_URL = "http://localhost:8080/schedule";
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-});
+import axiosInstance from "../utils/http-common";
 
 class ScheduleService {
     getAllTrips() {
-        return axiosInstance.get(`/get_all_trips`);
+        return axiosInstance.get(`/schedule/get_all_trips`);
     }
 }
 
