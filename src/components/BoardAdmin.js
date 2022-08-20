@@ -1,35 +1,31 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import UserService from "../services/AdminService";
-import {Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-export default function Admin() {
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        getAllUsers()
-    }, [])
+export default function BoardAdmin() {
+    const [users, setUsers] = useState([]);
 
     const getAllUsers = () => {
         UserService.getAllUsers().then((response) => {
-            setUsers(response.data)
+            setUsers(response.data);
             console.log(response.data);
         }).catch(error => {
             console.log(error);
-        })
+        });
     };
 
     const deleteUser = (id) => {
         UserService.deleteUser(id).then(() => {
-            // getAllUsers();
+            getAllUsers();
             setUsers(users.filter(user => user.id !== id));
         }).catch(error => {
             console.log(error);
-        })
+        });
 
-    }
+    };
 
-    console.log(users)
+    console.log(users);
 
     return (
         <div className="container">
@@ -37,13 +33,13 @@ export default function Admin() {
                 <h2 className="text-center">
                     <strong>Список пользователей</strong>
                 </h2>
-                <br/>
+                <br />
             </header>
-            <br/>
+            <br />
             {/*<button className="btn btn-primary" onClick={this.addUser()}>Добавить пользователя</button>*/}
             <Link to="/create_user" className="btn btn-primary"> Добавить пользователя </Link>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <Table hover variant="light">
                 <thead>
                 <tr align="center">
@@ -80,7 +76,7 @@ export default function Admin() {
 
                             <Link className="btn btn-info" to={`/edit-employee/${user.id}`}> Изменить </Link>
                             <button className="btn btn-danger" onClick={() => deleteUser(user.id)}
-                                    style={{marginLeft: "10px"}}>
+                                    style={{ marginLeft: "10px" }}>
                                 Удалить
                             </button>
                         </td>
