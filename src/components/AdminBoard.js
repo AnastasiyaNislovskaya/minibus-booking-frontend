@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserService from "../services/AdminService";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default function BoardAdmin() {
+export default function AdminBoard() {
     const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        getAllUsers();
+    }, []);
 
     const getAllUsers = () => {
         UserService.getAllUsers().then((response) => {
@@ -22,7 +26,6 @@ export default function BoardAdmin() {
         }).catch(error => {
             console.log(error);
         });
-
     };
 
     console.log(users);
@@ -36,7 +39,6 @@ export default function BoardAdmin() {
                 <br />
             </header>
             <br />
-            {/*<button className="btn btn-primary" onClick={this.addUser()}>Добавить пользователя</button>*/}
             <Link to="/create_user" className="btn btn-primary"> Добавить пользователя </Link>
             <br />
             <br />
