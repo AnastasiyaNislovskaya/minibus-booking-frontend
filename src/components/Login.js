@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import AuthService from "../services/AuthService";
 import { required } from "../utils/validation";
+import { AuthService }  from "../services/AuthService";
 
 export default function Login() {
     let navigate = useNavigate();

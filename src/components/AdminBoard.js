@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserService from "../services/AdminService";
+import { AdminService } from "../services/AdminService";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ export default function AdminBoard() {
     }, []);
 
     const getAllUsers = () => {
-        UserService.getAllUsers().then((response) => {
+        AdminService.getAllUsers().then((response) => {
             setUsers(response.data);
             console.log(response.data);
         }).catch(error => {
@@ -20,7 +20,7 @@ export default function AdminBoard() {
     };
 
     const deleteUser = (id) => {
-        UserService.deleteUser(id).then(() => {
+        AdminService.deleteUser(id).then(() => {
             getAllUsers();
             setUsers(users.filter(user => user.id !== id));
         }).catch(error => {

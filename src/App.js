@@ -10,7 +10,7 @@ import Register from "./components/Register";
 import Schedule from "./components/Schedule";
 import BookingTicket from "./components/BookingTicket";
 import Login from "./components/Login";
-import AuthService from "./services/AuthService";
+import { AuthService } from "./services/AuthService";
 import { eventBus as EventBus } from "./utils/eventBus";
 import AddUser from "./components/AddUser";
 

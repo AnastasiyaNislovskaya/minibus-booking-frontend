@@ -1,9 +1,7 @@
-import axiosInstance from "../utils/http-common";
+import { axiosInstance } from "./AxiosInstance";
 
-class ScheduleService {
+export const ScheduleService = {
     getAllTrips() {
         return axiosInstance.get(`/schedule/get_all_trips`);
     }
 }
-
-export default new ScheduleService();

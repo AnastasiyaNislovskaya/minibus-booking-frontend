@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table } from "react-bootstrap";
-import ScheduleService from "../services/ScheduleService";
+import { ScheduleService } from "../services/ScheduleService";
 import { Link } from "react-router-dom";
 
 export default function Schedule() {

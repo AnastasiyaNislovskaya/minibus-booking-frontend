@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import AuthService from "../services/AuthService";
+import { AuthService } from "../services/AuthService";
 import { required, validEmail, validPassword, validUsername } from "../utils/validation";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AuthService from "../services/AuthService";
+import { AuthService } from "../services/AuthService";
 
 export default function Profile() {
     const currentUser = AuthService.getCurrentUser();

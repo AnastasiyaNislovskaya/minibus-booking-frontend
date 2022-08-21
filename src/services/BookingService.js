@@ -1,6 +1,6 @@
-import axiosInstance from "../utils/http-common";
+import { axiosInstance } from "./AxiosInstance";
 
-class BookingService {
+export const BookingService = {
     bookTicket(userId, tripId) {
         return axiosInstance.post(`/booking/book_ticket`, null, {
             params: {
@@ -9,6 +9,4 @@ class BookingService {
             }
         });
     }
-}
-
-export default new BookingService();
+};
