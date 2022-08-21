@@ -4,8 +4,11 @@ export const AuthService = {
     login(username, password) {
         return axiosInstance
             .post(`/auth/signin`, { username, password })
-            .then(response => {
-                localStorage.setItem("user", JSON.stringify(response.data));
+            .then((response) => {
+                if (response.data.accessToken) {
+                    localStorage.setItem("user", JSON.stringify(response.data));
+                }
+
                 return response.data;
             });
     },
