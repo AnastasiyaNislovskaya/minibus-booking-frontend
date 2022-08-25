@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 
 export default function Profile() {
@@ -29,11 +28,6 @@ export default function Profile() {
                 <strong>Email: </strong>
                 {currentUser.email}
             </p>
-            <br />
-
-            {currentUser.roles[0].name === "ROLE_ADMIN" &&
-                <Link to="/admin" className="btn btn-danger"> Admin </Link>
-            }
         </div>
     );
 }

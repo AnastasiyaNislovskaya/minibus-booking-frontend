@@ -28,8 +28,6 @@ export default function AdminBoard() {
         });
     };
 
-    console.log(users);
-
     return (
         <div className="container">
             <header className="jumbotron">
@@ -39,9 +37,8 @@ export default function AdminBoard() {
                 <br />
             </header>
             <br />
-            <Link to="/create_user" className="btn btn-primary"> Добавить пользователя </Link>
-            <br />
-            <br />
+            <Link to="/create_user" className="btn btn-success"> Добавить пользователя </Link>
+            <br /><br />
             <Table hover variant="light">
                 <thead>
                 <tr align="center">
@@ -49,8 +46,9 @@ export default function AdminBoard() {
                     <th><strong>Фамилия</strong></th>
                     <th><strong>Логин</strong></th>
                     <th><strong>Email</strong></th>
-                    <th></th>
+                    <th><strong>Роль</strong></th>
                     <th><strong>Действия</strong></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,23 +58,11 @@ export default function AdminBoard() {
                         <td>{user.last_name}</td>
                         <td>{user.username}</td>
                         <td>{user.email}</td>
-                        <td>{user.roles[0].name}</td>
+                        <td>{user.roles[0].name.toLowerCase()}</td>
                         <td>
-                            {/*<button onClick={() => this.editUser(user.id)}*/}
-                            {/*        className="btn btn-info">Update*/}
-                            {/*</button>*/}
-                            {/*<button style={{marginLeft: "10px"}}*/}
-                            {/*        onClick={() => this.deleteUser(user.id)}*/}
-                            {/*        className="btn btn-danger">*/}
-                            {/*    <span>Удалить</span>*/}
-                            {/*</button>*/}
-                            {/*<button style={{marginLeft: "10px"}}*/}
-                            {/*        onClick={() => this.viewUser(user.id)}*/}
-                            {/*        className="btn btn-info">View*/}
-                            {/*</button>*/}
-
-
-                            <Link className="btn btn-info" to={`/edit-employee/${user.id}`}> Изменить </Link>
+                            <Link className="btn btn-primary" to={`/update_user/${user.id}`}> Изменить </Link>
+                        </td>
+                        <td>
                             <button className="btn btn-danger" onClick={() => deleteUser(user.id)}
                                     style={{ marginLeft: "10px" }}>
                                 Удалить
@@ -88,5 +74,4 @@ export default function AdminBoard() {
             </Table>
         </div>
     );
-    // }
 }
