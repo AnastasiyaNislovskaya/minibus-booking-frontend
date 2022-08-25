@@ -42,6 +42,7 @@ export default function AdminBoard() {
             <Table hover variant="light">
                 <thead>
                 <tr align="center">
+                    <th><strong>Id</strong></th>
                     <th><strong>Имя</strong></th>
                     <th><strong>Фамилия</strong></th>
                     <th><strong>Логин</strong></th>
@@ -54,6 +55,7 @@ export default function AdminBoard() {
                 <tbody>
                 {users.map(user => (
                     <tr key={user.id} align="center">
+                        <td>{user.id} </td>
                         <td>{user.first_name} </td>
                         <td>{user.last_name}</td>
                         <td>{user.username}</td>
@@ -63,10 +65,7 @@ export default function AdminBoard() {
                             <Link className="btn btn-primary" to={`/update_user/${user.id}`}> Изменить </Link>
                         </td>
                         <td>
-                            <button className="btn btn-danger" onClick={() => deleteUser(user.id)}
-                                    style={{ marginLeft: "10px" }}>
-                                Удалить
-                            </button>
+                            <button className="btn btn-danger" onClick={() => deleteUser(user.id)}> Удалить </button>
                         </td>
                     </tr>
                 ))}

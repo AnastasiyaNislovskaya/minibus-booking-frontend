@@ -11,8 +11,7 @@ export default function Register() {
                     alt="profile-img"
                     className="profile-img-card"
                 />
-
-                <CreateUser btnAction={"Зарегистрироваться"}/>
+                <CreateUser btnAction={"Зарегистрироваться"} redirectPath={"/profile"} />
             </div>
         </div>
     );

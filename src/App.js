@@ -5,14 +5,14 @@ import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Contacts from "./components/Contacts";
 import Profile from "./components/Profile";
-import AdminBoard from "./components/AdminBoard";
 import Register from "./components/Register";
 import Schedule from "./components/Schedule";
 import BookingTicket from "./components/BookingTicket";
 import Login from "./components/Login";
+import AddUser from "./components/AddUser";
 import { AuthService } from "./services/AuthService";
 import { eventBus as EventBus } from "./utils/eventBus";
-import AddUser from "./components/AddUser";
+import AdminBoard from "./components/AdminBoard";
 
 export default function App() {
     const [showAdminBoard, setShowAdminBoard] = useState(false);

@@ -4,8 +4,11 @@ import { required, validEmail, validPassword, validUsername } from "../utils/val
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { useNavigate } from "react-router-dom";
 
-export default function CreateUser({ btnAction }) {
+export default function CreateUser({ btnAction, redirectPath }) {
+    let navigate = useNavigate();
+
     const form = useRef();
     const checkBtn = useRef();
 
@@ -48,13 +51,12 @@ export default function CreateUser({ btnAction }) {
         setMessage("");
         setSuccessful(false);
 
-        // form.current.validateAll();
-
         if (checkBtn.current.context._errors.length === 0) {
-            AuthService.register(firstName, lastName, username, email, password).then(
-                (response) => {
+            AuthService.register(firstName, lastName, username, email, password).then((response) => {
                     setMessage(response.data.message);
                     setSuccessful(true);
+                    navigate(redirectPath);
+                    window.location.reload();
                 },
                 (error) => {
                     const resMessage =

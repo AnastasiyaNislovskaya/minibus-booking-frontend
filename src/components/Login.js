@@ -4,7 +4,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { required } from "../utils/validation";
-import { AuthService }  from "../services/AuthService";
+import { AuthService } from "../services/AuthService";
 
 export default function Login() {
     let navigate = useNavigate();
@@ -32,8 +32,6 @@ export default function Login() {
 
         setMessage("");
         setLoading(true);
-
-        // form.current.validateAll();
 
         if (checkBtn.current.context._errors.length === 0) {
             AuthService.login(username, password).then(() => {
