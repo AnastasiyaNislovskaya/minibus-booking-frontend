@@ -52,24 +52,25 @@ export default function CreateUser({ btnAction, redirectPath }) {
         setSuccessful(false);
 
         if (checkBtn.current.context._errors.length === 0) {
-            AuthService.register(firstName, lastName, username, email, password).then((response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
-                    navigate(redirectPath);
-                    window.location.reload();
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
+            AuthService.register(firstName, lastName, username, email, password)
+                .then((response) => {
+                        setMessage(response.data.message);
+                        setSuccessful(true);
+                        navigate(redirectPath);
+                        window.location.reload();
+                    },
+                    (error) => {
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
 
-                    setMessage(resMessage);
-                    setSuccessful(false);
-                }
-            );
+                        setMessage(resMessage);
+                        setSuccessful(false);
+                    }
+                );
         }
     };
 

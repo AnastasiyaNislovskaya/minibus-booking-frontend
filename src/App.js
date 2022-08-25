@@ -10,9 +10,10 @@ import Schedule from "./components/Schedule";
 import BookingTicket from "./components/BookingTicket";
 import Login from "./components/Login";
 import AddUser from "./components/AddUser";
+import AdminBoard from "./components/AdminBoard";
+import NotFound from "./components/NotFound";
 import { AuthService } from "./services/AuthService";
 import { eventBus as EventBus } from "./utils/eventBus";
-import AdminBoard from "./components/AdminBoard";
 
 export default function App() {
     const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -104,6 +105,7 @@ export default function App() {
                         <Route exact path={"/book"} element={<BookingTicket />} />
                         <Route exact path={"/admin"} element={<AdminBoard />} />
                         <Route exact path={"/create_user"} element={<AddUser />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </div>
             </div>

@@ -12,12 +12,14 @@ export default function Schedule() {
     }, []);
 
     const getAllTrips = () => {
-        ScheduleService.getAllTrips().then((response) => {
-            setTrips(response.data);
-            console.log(response.data);
-        }).catch(error => {
-            console.log(error);
-        });
+        ScheduleService.getAllTrips()
+            .then((response) => {
+                setTrips(response.data);
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     // bookTicket(userId, tripId);
