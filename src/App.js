@@ -98,10 +98,10 @@ export default function App() {
                     <Routes>
                         <Route exact path={"/"} element={<Home />} />
                         <Route exact path={"/contacts"} element={<Contacts />} />
+                        <Route exact path={"/schedule"} element={<Schedule />} />
                         <Route exact path={"/login"} element={<Login />} />
                         <Route exact path={"/register"} element={<Register />} />
                         <Route exact path={"/profile"} element={<Profile />} />
-                        <Route exact path={"/schedule"} element={<Schedule />} />
                         <Route exact path={"/book"} element={<BookingTicket />} />
                         <Route exact path={"/admin"} element={<AdminBoard />} />
                         <Route exact path={"/create_user"} element={<AddUser />} />

@@ -54,7 +54,7 @@ export default function AdminBoard() {
                     <th><strong>Email</strong></th>
                     <th><strong>Роль</strong></th>
                     <th><strong>Действия</strong></th>
-                    <th></th>
+                    {/*<th></th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -65,10 +65,10 @@ export default function AdminBoard() {
                         <td>{user.last_name}</td>
                         <td>{user.username}</td>
                         <td>{user.email}</td>
-                        <td>{user.roles[0].name.toLowerCase()}</td>
-                        <td>
-                            <Link className="btn btn-primary" to={`/update_user/${user.id}`}> Изменить </Link>
-                        </td>
+                        <td>{user.roles[0].name.toLowerCase().substring(5)}</td>
+                        {/*<td>*/}
+                        {/*    <Link className="btn btn-primary" to={`/update_user/${user.id}`}> Изменить </Link>*/}
+                        {/*</td>*/}
                         <td>
                             <button className="btn btn-danger" onClick={() => handleDelete(user.id)}> Удалить</button>
                         </td>

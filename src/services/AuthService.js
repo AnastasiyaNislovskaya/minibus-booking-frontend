@@ -3,7 +3,9 @@ import { axiosInstance } from "./AxiosInstance";
 export const AuthService = {
     login(username, password) {
         return axiosInstance
-            .post(`/auth/signin`, { username, password })
+            .post(`/auth/signin`,
+                { username, password }
+            )
             .then((response) => {
                 if (response.data.token) {
                     localStorage.setItem("user", JSON.stringify(response.data));
@@ -19,7 +21,9 @@ export const AuthService = {
 
     register(first_name, last_name, username, email, password) {
         return axiosInstance
-            .post(`/auth/signup`, { first_name, last_name, username, email, password });
+            .post(`/auth/signup`,
+                { first_name, last_name, username, email, password }
+            );
     },
 
     getCurrentUser() {
