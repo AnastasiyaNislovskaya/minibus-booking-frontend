@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table } from "react-bootstrap";
 import { ScheduleService } from "../services/ScheduleService";
-import { Link } from "react-router-dom";
+import { BookingService } from "../services/BookingService";
+import { AuthService } from "../services/AuthService";
 
 export default function Schedule() {
     const [trips, setTrips] = useState([]);
@@ -15,19 +16,28 @@ export default function Schedule() {
         ScheduleService.getAllTrips()
             .then((response) => {
                 setTrips(response.data);
-                console.log(response.data);
+                console.log("trips data: ", response.data);
             })
             .catch(error => {
                 console.log(error);
             });
     };
 
-    // bookTicket(userId, tripId);
-    // {
-    //     BookingService.bookTicket(userId, tripId).then(() => {
-    //         alert("Билет заказан успешно!");
-    //     });
-    // }
+    const user = AuthService.getCurrentUser();
+
+    const handleBooking = (userId, tripId) => {
+        console.log("user id: ", userId);
+        console.log("trip id: ", tripId);
+        BookingService.bookTicket(userId, tripId)
+            .then((response) => {
+                getAllTrips();
+                console.log("ticket booked successfully", response.data);
+                alert("Билет заказан успешно!");
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
 
     return (
         <div className="container">
@@ -46,7 +56,7 @@ export default function Schedule() {
                     <td><strong>Отправление</strong></td>
                     <td><strong>Прибытие</strong></td>
                     <td><strong>Стоимость</strong></td>
-                    {/*<td>Доступные места</td>*/}
+                    <td><strong>Доступные места</strong></td>
                     <td></td>
                 </tr>
                 </thead>
@@ -59,14 +69,12 @@ export default function Schedule() {
                         <td>{trip.departure_time}</td>
                         <td>{trip.arrival_time}</td>
                         <td>{trip.fare} руб.</td>
-                        {/*<td>{trip.available_sets}</td>*/}
+                        <td>{trip.available_sets}</td>
                         <td>
-                            {/*TODO*/}
-                            <Link to="/book" className="btn btn-secondary"> Заказать </Link>
-                            {/*<button className="btn btn-secondary"*/}
-                            {/*        onClick={() => this.bookTicket(AuthService.getCurrentUser().id, trip.id)}>*/}
-                            {/*    <span>Заказать</span>*/}
-                            {/*</button>*/}
+                            <button className="btn btn-primary"
+                                    onClick={() => handleBooking(user.id, trip.id)}>
+                                <span>Заказать</span>
+                            </button>
                         </td>
                     </tr>
                 ))}

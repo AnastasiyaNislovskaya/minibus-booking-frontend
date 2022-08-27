@@ -1,33 +1,40 @@
 import React from "react";
 import { AuthService } from "../services/AuthService";
+import { Table } from "react-bootstrap";
 
 export default function Profile() {
-    const currentUser = AuthService.getCurrentUser();
+    const user = AuthService.getCurrentUser();
 
     return (
         <div className="container">
             <header className="jumbotron">
-                <h3>
+                <h2 className="text-center">
                     <strong>Профиль</strong>
-                </h3>
+                </h2>
+                <br />
             </header>
-            <br />
-            <p>
-                <strong>Имя: </strong>
-                {currentUser.first_name}
-            </p>
-            <p>
-                <strong>Фамилия: </strong>
-                {currentUser.last_name}
-            </p>
-            <p>
-                <strong>Логин: </strong>
-                {currentUser.username}
-            </p>
-            <p>
-                <strong>Email: </strong>
-                {currentUser.email}
-            </p>
+            <div>
+                <Table hover variant="light">
+                    <thead>
+                    <tr>
+                        <td><strong>Имя: </strong></td>
+                        <td>{user.first_name}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Фамилия: </strong></td>
+                        <td>{user.last_name}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Логин: </strong></td>
+                        <td>{user.username}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email: </strong></td>
+                        <td>{user.email}</td>
+                    </tr>
+                    </thead>
+                </Table>
+            </div>
         </div>
     );
 }

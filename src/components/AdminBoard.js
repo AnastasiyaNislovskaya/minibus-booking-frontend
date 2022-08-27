@@ -13,8 +13,8 @@ export default function AdminBoard() {
     const getAllUsers = () => {
         AdminService.getAllUsers()
             .then((response) => {
-                console.log("user data: " + response.data);
                 setUsers(response.data);
+                console.log("users data: ", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -25,8 +25,8 @@ export default function AdminBoard() {
         console.log("user id: ", id);
         AdminService.deleteUser(id)
             .then((response) => {
-                console.log("user deleted successfully", response.data);
                 getAllUsers();
+                console.log("user deleted successfully", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -54,7 +54,6 @@ export default function AdminBoard() {
                     <th><strong>Email</strong></th>
                     <th><strong>Роль</strong></th>
                     <th><strong>Действия</strong></th>
-                    {/*<th></th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -66,9 +65,6 @@ export default function AdminBoard() {
                         <td>{user.username}</td>
                         <td>{user.email}</td>
                         <td>{user.roles[0].name.toLowerCase().substring(5)}</td>
-                        {/*<td>*/}
-                        {/*    <Link className="btn btn-primary" to={`/update_user/${user.id}`}> Изменить </Link>*/}
-                        {/*</td>*/}
                         <td>
                             <button className="btn btn-danger" onClick={() => handleDelete(user.id)}> Удалить</button>
                         </td>

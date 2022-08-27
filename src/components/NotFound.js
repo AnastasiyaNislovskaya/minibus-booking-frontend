@@ -3,7 +3,9 @@ import React from "react";
 export default function NotFound() {
     return (
         <div>
-            <p><strong>Page not found</strong></p>
+            <h4 className="text-center">
+                <strong>Старница не найдена</strong>
+            </h4>
         </div>
     );
 }
