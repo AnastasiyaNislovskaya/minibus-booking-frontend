@@ -54,7 +54,7 @@ export default function NavBar() {
                     <div className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link to={"/admin"} className="nav-link">
-                                Admin Board
+                                Администратор
                             </Link>
                         </li>
                     </div>
