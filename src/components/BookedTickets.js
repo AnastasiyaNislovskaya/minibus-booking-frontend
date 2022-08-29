@@ -13,7 +13,7 @@ export default function BookedTickets() {
         if (user != null) {
             getAllTickets();
         }
-    }, [user]);
+    }, []);
 
     const getAllTickets = () => {
         TicketsService.getAllTickets(user.id)
@@ -60,6 +60,7 @@ export default function BookedTickets() {
                                         <td><strong>Время отправления</strong></td>
                                         <td><strong>Время прибытия</strong></td>
                                         <td><strong>Стоимость билета</strong></td>
+                                        <td><strong>Номер машины</strong></td>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -72,6 +73,7 @@ export default function BookedTickets() {
                                             <td>{ticket.trip_schedule.departure_time}</td>
                                             <td>{ticket.trip_schedule.arrival_time}</td>
                                             <td>{ticket.trip_schedule.fare} руб.</td>
+                                            <td>{ticket.trip_schedule.car.number}</td>
                                             <td>
                                                 <button className="btn btn-danger"
                                                         onClick={() => handleDelete(ticket.id)}> Отменить

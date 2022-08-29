@@ -28,6 +28,10 @@ export default function Profile() {
                                 <td>{user.last_name}</td>
                             </tr>
                             <tr>
+                                <td><strong>Телефон: </strong></td>
+                                <td>{user.phone}</td>
+                            </tr>
+                            <tr>
                                 <td><strong>Логин: </strong></td>
                                 <td>{user.username}</td>
                             </tr>

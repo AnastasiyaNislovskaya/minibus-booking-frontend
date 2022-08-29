@@ -19,10 +19,10 @@ export const AuthService = {
         localStorage.removeItem("user");
     },
 
-    register(first_name, last_name, username, email, password) {
+    register(first_name, last_name, phone, username, email, password) {
         return axiosInstance
             .post(`/auth/signup`,
-                { first_name, last_name, username, email, password }
+                { first_name, last_name, phone, username, email, password }
             );
     },
 

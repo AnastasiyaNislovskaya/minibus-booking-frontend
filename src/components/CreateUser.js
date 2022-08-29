@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { AuthService } from "../services/AuthService";
-import { required, validEmail, validPassword, validUsername } from "../utils/validation";
+import { required, validEmail, validPassword, validPhone, validUsername } from "../utils/validation";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -14,6 +14,7 @@ export default function CreateUser({ btnAction, redirectPath }) {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -28,6 +29,11 @@ export default function CreateUser({ btnAction, redirectPath }) {
     const onChangeLastName = (e) => {
         const lastName = e.target.value;
         setLastName(lastName);
+    };
+
+    const onChangePhone = (e) => {
+        const phone = e.target.value;
+        setPhone(phone);
     };
 
     const onChangeUsername = (e) => {
@@ -52,7 +58,7 @@ export default function CreateUser({ btnAction, redirectPath }) {
         setSuccessful(false);
 
         if (checkBtn.current.context._errors.length === 0) {
-            AuthService.register(firstName, lastName, username, email, password)
+            AuthService.register(firstName, lastName, phone, username, email, password)
                 .then((response) => {
                         setMessage(response.data.message);
                         setSuccessful(true);
@@ -90,7 +96,6 @@ export default function CreateUser({ btnAction, redirectPath }) {
                                 validations={[required, validUsername]}
                             />
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="lastName">Фамилия</label>
                             <Input
@@ -102,7 +107,17 @@ export default function CreateUser({ btnAction, redirectPath }) {
                                 validations={[required, validUsername]}
                             />
                         </div>
-
+                        <div className="form-group">
+                            <label htmlFor="phone">Телефон</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="phone"
+                                value={phone}
+                                onChange={onChangePhone}
+                                validations={[required, validPhone]}
+                            />
+                        </div>
                         <div className="form-group">
                             <label htmlFor="username">Логин</label>
                             <Input
@@ -114,7 +129,6 @@ export default function CreateUser({ btnAction, redirectPath }) {
                                 validations={[required, validUsername]}
                             />
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
                             <Input
@@ -126,7 +140,6 @@ export default function CreateUser({ btnAction, redirectPath }) {
                                 validations={[required, validEmail]}
                             />
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="password">Пароль</label>
                             <Input
