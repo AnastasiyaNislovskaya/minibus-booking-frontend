@@ -1,231 +1,171 @@
-import isEmail from "validator/es/lib/isEmail";
-import React, {Component} from "@types/react";
-import AuthService from "../services/AuthService";
+import React, { useRef, useState } from "react";
+import { AuthService } from "../services/AuthService";
+import { required, validEmail, validPassword, validPhone, validUsername } from "../utils/validation";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { useNavigate } from "react-router-dom";
 
-const required = value => {
-    if (!value) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This field is required!
-            </div>
-        );
-    }
-};
+export default function CreateUser({ btnAction, redirectPath }) {
+    let navigate = useNavigate();
 
-const email = value => {
-    if (!isEmail(value)) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This is a not valid email!
-            </div>
-        );
-    }
-};
+    const form = useRef();
+    const checkBtn = useRef();
 
-const vusername = value => {
-    if (value.length < 3 || value.length > 20) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This username must be between 3 and 20 characters.
-            </div>
-        );
-    }
-};
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [successful, setSuccessful] = useState(false);
+    const [message, setMessage] = useState("");
 
-const vpassword = value => {
-    if (value.length < 6 || value.length > 40) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This password must be between 6 and 40 characters.
-            </div>
-        );
-    }
-};
+    const onChangeFirstName = (e) => {
+        const firstName = e.target.value;
+        setFirstName(firstName);
+    };
 
-export default class Register extends Component {
-    constructor(props) {
-        super(props);
-        this.handleRegister = this.handleRegister.bind(this);
-        this.onChangeFirstName = this.onChangeFirstName.bind(this);
-        this.onChangeLastName = this.onChangeLastName.bind(this);
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+    const onChangeLastName = (e) => {
+        const lastName = e.target.value;
+        setLastName(lastName);
+    };
 
-        this.state = {
-            first_name: "",
-            last_name: "",
-            username: "",
-            email: "",
-            password: "",
-            successful: false,
-            message: ""
-        }
-    }
+    const onChangePhone = (e) => {
+        const phone = e.target.value;
+        setPhone(phone);
+    };
 
-    onChangeFirstName(e) {
-        this.setState({
-            first_name: e.target.value
-        });
-    }
+    const onChangeUsername = (e) => {
+        const username = e.target.value;
+        setUsername(username);
+    };
 
-    onChangeLastName(e) {
-        this.setState({
-            last_name: e.target.value
-        });
-    }
+    const onChangeEmail = (e) => {
+        const email = e.target.value;
+        setEmail(email);
+    };
 
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        });
-    }
+    const onChangePassword = (e) => {
+        const password = e.target.value;
+        setPassword(password);
+    };
 
-    onChangeEmail(e) {
-        this.setState({
-            email: e.target.value
-        });
-    }
-
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        });
-    }
-
-    handleRegister(e) {
+    const handleRegister = (e) => {
         e.preventDefault();
 
-        this.setState({
-            message: "",
-            successful: false
-        });
+        setMessage("");
+        setSuccessful(false);
 
-        this.form.validateAll();
+        if (checkBtn.current.context._errors.length === 0) {
+            AuthService.register(firstName, lastName, phone, username, email, password)
+                .then((response) => {
+                        setMessage(response.data.message);
+                        setSuccessful(true);
+                        navigate(redirectPath);
+                        window.location.reload();
+                    },
+                    (error) => {
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
 
-        if (this.checkBtn.context._errors.length === 0) {
-            AuthService.register(
-                this.state.first_name,
-                this.state.last_name,
-                this.state.username,
-                this.state.email,
-                this.state.password
-            ).then(
-                response => {
-                    this.setState({
-                        message: response.data.message,
-                        successful: true
-                    });
-                },
-                error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    this.setState({
-                        successful: false,
-                        message: resMessage
-                    });
-                }
-            )
+                        setMessage(resMessage);
+                        setSuccessful(false);
+                    }
+                );
         }
-    }
+    };
 
-    render() {
-        return (
-            <div className="col-md-12">
-                <div className="card card-container">
-                    <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                         alt="profile-img"
-                         className="profile-img-card"
-                    />
-
-                    <Form onSubmit={this.handleRegister}
-                          ref={c => {
-                              this.form = c;
-                          }}
-                    >
-                        {!this.state.successful && (
-                            <div>
-                                <div className="form-group">
-                                    <label htmlFor="firstName">Имя</label>
-                                    <Input type="text"
-                                           className="form-control"
-                                           name="firstName"
-                                           value={this.state.first_name}
-                                           onChange={this.onChangeFirstName}
-                                           validations={[required, vusername]}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="lastName">Фамилия</label>
-                                    <Input type="text"
-                                           className="form-control"
-                                           name="lastName"
-                                           value={this.state.last_name}
-                                           onChange={this.onChangeLastName}
-                                           validations={[required, vusername]}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="username">Логин</label>
-                                    <Input type="text"
-                                           className="form-control"
-                                           name="username"
-                                           value={this.state.username}
-                                           onChange={this.onChangeUsername}
-                                           validations={[required, vusername]}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="email">Email</label>
-                                    <Input type="text"
-                                           className="form-control"
-                                           name="email"
-                                           value={this.state.email}
-                                           onChange={this.onChangeEmail}
-                                           validations={[required, email]}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">Пароль</label>
-                                    <Input type="password"
-                                           className="form-control"
-                                           name="password"
-                                           value={this.state.password}
-                                           onChange={this.onChangePassword}
-                                           validations={[required, vpassword]}
-                                    />
-                                </div>
-                                <br/>
-                                <div className="form-group">
-                                    <button className="btn btn-primary btn-block">Зарегистрироваться</button>
-                                </div>
-                            </div>
-                        )}
-                        {this.state.message && (
-                            <div className="form-group">
-                                <div className={this.state.successful ? "alert alert-success" : "alert alert-danger"}
-                                     role="alert"
-                                >
-                                    {this.state.message}
-                                </div>
-                            </div>
-                        )}
-                        <CheckButton style={{display: "none"}}
-                                     ref={c => {
-                                         this.checkBtn = c;
-                                     }}
-                        />
-                    </Form>
-                </div>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <Form onSubmit={handleRegister} ref={form}>
+                {!successful && (
+                    <div>
+                        <div className="form-group">
+                            <label htmlFor="firstName">Имя</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="firstName"
+                                value={firstName}
+                                onChange={onChangeFirstName}
+                                validations={[required, validUsername]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="lastName">Фамилия</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="lastName"
+                                value={lastName}
+                                onChange={onChangeLastName}
+                                validations={[required, validUsername]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="phone">Телефон</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="phone"
+                                value={phone}
+                                onChange={onChangePhone}
+                                validations={[required, validPhone]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="username">Логин</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="username"
+                                value={username}
+                                onChange={onChangeUsername}
+                                validations={[required, validUsername]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="email"
+                                value={email}
+                                onChange={onChangeEmail}
+                                validations={[required, validEmail]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Пароль</label>
+                            <Input
+                                type="password"
+                                className="form-control"
+                                name="password"
+                                value={password}
+                                onChange={onChangePassword}
+                                validations={[required, validPassword]}
+                            />
+                        </div>
+                        <br />
+                        <div className="form-group">
+                            <button className="btn btn-primary btn-block">{btnAction}</button>
+                        </div>
+                    </div>
+                )}
+                {message && (
+                    <div className="form-group">
+                        <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+                            {message}
+                        </div>
+                    </div>
+                )}
+                <CheckButton style={{ display: "none" }} ref={checkBtn} />
+            </Form>
+        </div>
+    );
 }

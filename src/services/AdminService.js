@@ -1,26 +1,33 @@
-import axios from 'axios';
+import { axiosInstance } from "./AxiosInstance";
+import authHeader from "./AuthHeader";
 
-const API_URL = "http://localhost:8080/admin";
-
-const axiosInstance = axios.create({
-    withCredentials: true,
-    baseURL: API_URL,
-});
-
-class AdminService {
+export const AdminService = {
     getAllUsers() {
-        return axiosInstance.get(`/get_all_users`);
-    }
+        return axiosInstance
+            .get(`/admin/get_all_users`,
+                { headers: authHeader() }
+            );
+    },
 
-    deleteUser(user_id) {
-        return axiosInstance.delete(`/delete_user/${user_id}`);
-    }
+    getUserById(userId) {
+        return axiosInstance
+            .get(`/admin/get_by_id/${userId}`,
+                { headers: authHeader() }
+            );
+    },
 
     createUser(first_name, last_name, username, email, password) {
-        return axios.post(API_URL + `/create_user`, {
-            first_name, last_name, username, email, password
-        });
-    }
-}
+        return axiosInstance
+            .post(`/admin/create_user`,
+                { first_name, last_name, username, email, password },
+                { headers: authHeader() }
+            );
+    },
 
-export default new AdminService();
+    deleteUser(userId) {
+        return axiosInstance
+            .delete(`/admin/delete_user/${userId}`,
+                { headers: authHeader() }
+            );
+    }
+};

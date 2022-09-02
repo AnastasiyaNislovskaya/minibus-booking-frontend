@@ -1,20 +1,17 @@
-import axios from 'axios';
+import { axiosInstance } from "./AxiosInstance";
+import authHeader from "./AuthHeader";
 
-const API_URL = "http://localhost:8080/booking";
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-});
-
-class BookingService {
+export const BookingService = {
     bookTicket(userId, tripId) {
-        return axiosInstance.post(`/book_ticket`, null, {
-            params: {
-                user_id: userId,
-                trip_schedule_id: tripId
-            }
-        });
+        return axiosInstance
+            .post(`/booking/book_ticket`, null,
+                {
+                    params: {
+                        user_id: userId,
+                        trip_schedule_id: tripId
+                    },
+                    headers: authHeader()
+                }
+            );
     }
-}
-
-export default new BookingService();
+};

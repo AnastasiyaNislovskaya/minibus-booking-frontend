@@ -1,58 +1,120 @@
-import React, {Component} from 'react';
-import ScheduleService from "../services/ScheduleService";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Table} from "react-bootstrap";
-import AuthService from "../services/AuthService";
-import BookingService from "../services/BookingService";
+import { FormControl, InputGroup, Table } from "react-bootstrap";
+import { ScheduleService } from "../services/ScheduleService";
+import { BookingService } from "../services/BookingService";
+import { AuthService } from "../services/AuthService";
 
-export default class Schedule extends Component {
-    constructor(props) {
-        super(props);
+export default function Schedule() {
+    const user = AuthService.getCurrentUser();
 
-        this.state = {
-            trips: []
-        };
-    }
+    const [trips, setTrips] = useState([]);
 
-    componentDidMount() {
-        ScheduleService.getAllTrips().then(
-            response => {
-                this.setState({trips: response.data})
-            }
-        );
-    }
+    const [departure, setDeparture] = useState("");
+    const [arrival, setArrival] = useState("");
+    const [tripDate, setTripDate] = useState("");
 
-    bookTicket(userId, tripId) {
-        BookingService.bookTicket(userId, tripId).then(() => {
-            alert('Билет заказан успешно!');
-        });
-    }
+    useEffect(() => {
+        getAllTrips();
+    }, []);
 
-    render() {
-        const {trips} = this.state;
+    const getAllTrips = () => {
+        ScheduleService.getAllTrips()
+            .then((response) => {
+                setTrips(response.data);
+                console.log("trips data: ", response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
 
-        const {trip} = {
-            id: "",
-            departure_time: "",
-            arrival_time: "",
-            fare: "",
-            available_sets: "",
-            trip_detail: {
-                id: "",
-                departure: "",
-                arrival: "",
-                trip_date: "",
-            }
+    const handleBooking = (user, trip) => {
+        if (user != null) {
+            console.log("user id: ", user.id);
+            console.log("trip id: ", trip.id);
+            BookingService.bookTicket(user.id, trip.id)
+                .then((response) => {
+                    getAllTrips();
+                    console.log("ticket booked successfully", response.data);
+                    alert("Билет заказан успешно!");
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
+            alert("Пожалуйста, авторизуйтесь!");
         }
+    };
 
-        return (
-            <div className="container">
-                <header className="jumbotron">
-                    <h2 className="text-center">
-                        <strong>Доступыне рейсы</strong>
-                    </h2>
-                    <br/>
-                </header>
+    const onChangeDeparture = (e) => {
+        const departure = e.target.value;
+        setDeparture(departure);
+    };
+
+    const onChangeArrival = (e) => {
+        const arrival = e.target.value;
+        setArrival(arrival);
+    };
+
+    const onChangeDate = (e) => {
+        const tripDate = e.target.value;
+        setTripDate(tripDate);
+    };
+
+    const handleSearch = (departure, arrival, tripDate) => {
+        console.log("departure: ", departure);
+        console.log("arrival: ", arrival);
+        console.log("tripDate: ", tripDate);
+        ScheduleService.getTrips(departure, arrival, tripDate)
+            .then((response) => {
+                setTrips(response.data);
+                console.log("trips data: ", response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+    return (
+        <div className="container">
+            <header className="jumbotron">
+                <h2 className="text-center">
+                    <strong>Доступыне рейсы</strong>
+                </h2>
+                <br />
+            </header>
+            <div className="row h-100 justify-content-center align-items-center">
+                <InputGroup className="col-6">
+                    <FormControl
+                        placeholder="Гомель"
+                        aria-label="Search"
+                        type="text"
+                        value={departure}
+                        onChange={onChangeDeparture}
+                    />
+                    <FormControl
+                        placeholder="Минск"
+                        aria-label="Search"
+                        type="text"
+                        value={arrival}
+                        onChange={onChangeArrival}
+                    />
+                    <FormControl
+                        aria-label="Search"
+                        type="date"
+                        value={tripDate}
+                        onChange={onChangeDate}
+                    />
+                    <button className="btn btn-secondary"
+                            onClick={() => handleSearch(departure, arrival, tripDate)}>
+                        <span>Найти</span>
+                    </button>
+                </InputGroup>
+            </div>
+
+            <br />
+            {trips.length > 0 ? (
                 <Table hover variant="light">
                     <thead>
                     <tr align="center">
@@ -62,7 +124,7 @@ export default class Schedule extends Component {
                         <td><strong>Отправление</strong></td>
                         <td><strong>Прибытие</strong></td>
                         <td><strong>Стоимость</strong></td>
-                        {/*<td>Доступные места</td>*/}
+                        <td><strong>Доступные места</strong></td>
                         <td></td>
                     </tr>
                     </thead>
@@ -75,10 +137,10 @@ export default class Schedule extends Component {
                             <td>{trip.departure_time}</td>
                             <td>{trip.arrival_time}</td>
                             <td>{trip.fare} руб.</td>
-                            {/*<td>{trip.available_sets}</td>*/}
+                            <td>{trip.available_sets}</td>
                             <td>
-                                <button className="btn btn-secondary"
-                                        onClick={() => this.bookTicket(AuthService.getCurrentUser().id, trip.id)}>
+                                <button className="btn btn-primary"
+                                        onClick={() => handleBooking(user, trip)}>
                                     <span>Заказать</span>
                                 </button>
                             </td>
@@ -86,7 +148,11 @@ export default class Schedule extends Component {
                     ))}
                     </tbody>
                 </Table>
-            </div>
-        );
-    }
+            ) : (
+                <h4 className="text-center">
+                    <strong>Рейсов по данному запросу нет</strong>
+                </h4>
+            )}
+        </div>
+    );
 }
