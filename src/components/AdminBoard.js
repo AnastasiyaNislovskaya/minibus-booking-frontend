@@ -17,7 +17,6 @@ export default function AdminBoard() {
         AdminService.getAllUsers()
             .then((response) => {
                 setUsers(response.data);
-                console.log("users data: ", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -27,9 +26,8 @@ export default function AdminBoard() {
     const handleDelete = (id) => {
         console.log("user id: ", id);
         AdminService.deleteUser(id)
-            .then((response) => {
+            .then(() => {
                 getAllUsers();
-                console.log("user deleted successfully", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -54,6 +52,7 @@ export default function AdminBoard() {
                             <th><strong>Id</strong></th>
                             <th><strong>Имя</strong></th>
                             <th><strong>Фамилия</strong></th>
+                            <th><strong>Телефон</strong></th>
                             <th><strong>Логин</strong></th>
                             <th><strong>Email</strong></th>
                             <th><strong>Роль</strong></th>
@@ -66,6 +65,7 @@ export default function AdminBoard() {
                                 <td>{user.id} </td>
                                 <td>{user.first_name} </td>
                                 <td>{user.last_name}</td>
+                                <td>{user.phone}</td>
                                 <td>{user.username}</td>
                                 <td>{user.email}</td>
                                 <td>{user.roles[0].name.toLowerCase().substring(5)}</td>

@@ -1,4 +1,4 @@
-import { axiosInstance } from "./AxiosInstance";
+import { axiosInstance } from "./common/axiosInstance";
 
 export const ScheduleService = {
     getAllTrips() {

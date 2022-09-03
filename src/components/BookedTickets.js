@@ -19,7 +19,6 @@ export default function BookedTickets() {
         TicketsService.getAllTickets(user.id)
             .then((response) => {
                 setTickets(response.data);
-                console.log("tickets data: ", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -29,9 +28,8 @@ export default function BookedTickets() {
     const handleDelete = (id) => {
         console.log("ticket id: ", id);
         TicketsService.deleteTicket(id)
-            .then((response) => {
+            .then(() => {
                 getAllTickets();
-                console.log("ticket deleted successfully", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -73,7 +71,7 @@ export default function BookedTickets() {
                                             <td>{ticket.trip_schedule.departure_time}</td>
                                             <td>{ticket.trip_schedule.arrival_time}</td>
                                             <td>{ticket.trip_schedule.fare} руб.</td>
-                                            <td>{ticket.trip_schedule.car.number}</td>
+                                            <td>{ticket.trip_schedule.car.car_number}</td>
                                             <td>
                                                 <button className="btn btn-danger"
                                                         onClick={() => handleDelete(ticket.id)}> Отменить

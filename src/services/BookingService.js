@@ -1,5 +1,5 @@
-import { axiosInstance } from "./AxiosInstance";
-import authHeader from "./AuthHeader";
+import { axiosInstance } from "./common/axiosInstance";
+import authHeader from "./common/authHeader";
 
 export const BookingService = {
     bookTicket(userId, tripId) {

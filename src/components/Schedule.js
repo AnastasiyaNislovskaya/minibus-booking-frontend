@@ -22,7 +22,6 @@ export default function Schedule() {
         ScheduleService.getAllTrips()
             .then((response) => {
                 setTrips(response.data);
-                console.log("trips data: ", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -34,9 +33,8 @@ export default function Schedule() {
             console.log("user id: ", user.id);
             console.log("trip id: ", trip.id);
             BookingService.bookTicket(user.id, trip.id)
-                .then((response) => {
+                .then(() => {
                     getAllTrips();
-                    console.log("ticket booked successfully", response.data);
                     alert("Билет заказан успешно!");
                 })
                 .catch(error => {
@@ -137,7 +135,7 @@ export default function Schedule() {
                             <td>{trip.departure_time}</td>
                             <td>{trip.arrival_time}</td>
                             <td>{trip.fare} руб.</td>
-                            <td>{trip.available_sets}</td>
+                            <td>{trip.car.seats_number}</td>
                             <td>
                                 <button className="btn btn-primary"
                                         onClick={() => handleBooking(user, trip)}>
