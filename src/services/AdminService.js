@@ -1,17 +1,10 @@
-import { axiosInstance } from "./AxiosInstance";
-import authHeader from "./AuthHeader";
+import { axiosInstance } from "./common/axiosInstance";
+import authHeader from "./common/authHeader";
 
 export const AdminService = {
     getAllUsers() {
         return axiosInstance
             .get(`/admin/get_all_users`,
-                { headers: authHeader() }
-            );
-    },
-
-    getUserById(userId) {
-        return axiosInstance
-            .get(`/admin/get_by_id/${userId}`,
                 { headers: authHeader() }
             );
     },

@@ -1,4 +1,4 @@
-import { axiosInstance } from "./AxiosInstance";
+import { axiosInstance } from "./common/axiosInstance";
 
 export const AuthService = {
     login(username, password) {
@@ -11,7 +11,7 @@ export const AuthService = {
                     localStorage.setItem("user", JSON.stringify(response.data));
                 }
 
-                return response.data;
+                return response;
             });
     },
 
