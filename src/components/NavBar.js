@@ -32,8 +32,8 @@ export default function NavBar() {
 
     return (
         <div>
-            <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <div className="navbar-nav mr-auto">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-0 h5">
+                <div className="navbar-nav ">
                     <li className="navbar-item">
                         <Link to={"/"} className="nav-link">
                             Главная

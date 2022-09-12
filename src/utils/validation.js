@@ -11,21 +11,21 @@ export const required = (value) => {
     }
 };
 
-export const validPhone = (value) => {
-    if (value.length < 3 || value.length > 20) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                Номер телефона должен содержать от 3 до 20 символов.
-            </div>
-        );
-    }
-};
-
 export const validEmail = (value) => {
     if (!isEmail(value)) {
         return (
             <div className="alert alert-danger" role="alert">
                 Это невалидный email!
+            </div>
+        );
+    }
+};
+
+export const validPhone = (value) => {
+    if (value.length < 3 || value.length > 20) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                Номер телефона должен содержать от 3 до 20 символов.
             </div>
         );
     }
@@ -50,3 +50,4 @@ export const validPassword = (value) => {
         );
     }
 };
+

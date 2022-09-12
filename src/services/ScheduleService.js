@@ -6,6 +6,6 @@ export const ScheduleService = {
     },
 
     getTrips(departure, arrival, tripDate) {
-        return axiosInstance.get(`/schedule/get_trips/${departure}/${arrival}/${tripDate}`);
+        return axiosInstance.get(`/schedule/get_trips_by_params/${departure}/${arrival}/${tripDate}`);
     }
 };
