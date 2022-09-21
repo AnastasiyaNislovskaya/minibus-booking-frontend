@@ -77,7 +77,7 @@ export default function Schedule() {
         <div className="container">
             <header className="jumbotron">
                 <h2 className="text-center">
-                    <strong>Доступыне рейсы</strong>
+                    <strong>Доступные рейсы</strong>
                 </h2>
                 <br />
             </header>
